@@ -133,3 +133,14 @@ def fake_response_eur():
 @pytest.fixture(autouse=True)
 def disable_logging():
     logging.disable(logging.CRITICAL)
+
+
+@pytest.fixture
+def sample_operations():
+    return [
+        {"id": 1, "Описание": "Покупка продуктов", "Категория": "Еда", "amount": 1500},
+        {"id": 2, "Описание": "Оплата интернета", "Категория": "Коммунальные", "amount": 800},
+        {"id": 3, "Описание": "Кино", "Категория": "Развлечения", "amount": 500},
+        {"id": 4, "description": "Coffee", "category": "Food"},
+        {"id": 5, "Описание": "Такси", "amount": 300},
+    ]

@@ -1,6 +1,7 @@
 import json
 import os
 from unittest.mock import Mock
+
 import src.views as views
 
 
