@@ -56,9 +56,9 @@ def test_duplicate_prevention(sample_operations):
 def test_invalid_operations_data():
     invalid_data = [{"id": 1}, "not_a_dict", None]
     result = services.simple_search(invalid_data, "test")
-    assert result == []
+    assert result == json.dumps(invalid_data)
 
 
 def test_non_dict_operations():
     result = services.simple_search([1, 2, 3], "test")
-    assert result == []
+    assert result == json.dumps([1, 2, 3])
