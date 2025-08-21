@@ -1,6 +1,7 @@
 import logging
 from unittest.mock import MagicMock
 
+import pandas as pd
 import pytest
 
 
@@ -144,3 +145,20 @@ def sample_operations():
         {"id": 4, "description": "Coffee", "category": "Food"},
         {"id": 5, "Описание": "Такси", "amount": 300},
     ]
+
+
+@pytest.fixture
+def reports_sample_operations():
+    data = {
+        "Дата операции": [
+            "01.01.2023 12:00:00",
+            "15.02.2023 10:30:00",
+            "01.03.2023 14:15:00",
+            "20.03.2023 09:45:00",
+            "25.12.2022 16:20:00",
+            "05.04.2023 18:00:00",
+        ],
+        "Категория": ["Продукты", "Продукты", "Транспорт", "Продукты", "Продукты", "Продукты"],
+        "Сумма платежа": [1000, 2000, 500, 1500, 800, 1200],
+    }
+    return pd.DataFrame(data)
