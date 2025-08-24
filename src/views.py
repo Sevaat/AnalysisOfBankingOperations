@@ -2,12 +2,13 @@ import json
 import logging
 import os
 from datetime import datetime
+from pathlib import Path
 
 import src.utils as utils
 
 logger = logging.getLogger("views")
 logger.setLevel(logging.DEBUG)
-log_dir = os.path.abspath("../logs")
+log_dir = Path(__file__).resolve().parent.parent / "logs"
 os.makedirs(log_dir, exist_ok=True)
 file_handler = logging.FileHandler(filename=f"{log_dir}/views.log", mode="w")
 file_formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s: %(message)s")
@@ -30,7 +31,8 @@ def home_page(input_date: str) -> str:
     # форма приветствия
     greeting = utils.get_greeting(date)
     # чтение excel
-    filename = os.path.abspath("../data/operations.xlsx")
+    filename = Path(__file__).resolve().parent.parent / "data"
+    filename = f"{filename}/operations.xlsx"
     operations = utils.get_operations_from_excel(filename)
     # сортировка по дате
     operations = utils.get_operations_by_date(operations, date)
@@ -54,7 +56,9 @@ def home_page(input_date: str) -> str:
     except Exception as e:
         logging.error(f"Ошибка: {e}")
     # получение пользовательских валют и акций
-    currencies_stocks = utils.get_currencies_stocks("../user_settings.json")
+    filename = Path(__file__).resolve().parent.parent
+    filename = f"{filename}/user_settings.json"
+    currencies_stocks = utils.get_currencies_stocks(filename)
     # получение курса валют
     currencies = utils.get_currency_rates(currencies_stocks)
     # получение курса акций

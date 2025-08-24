@@ -1,5 +1,7 @@
 import os
 import tempfile
+from datetime import datetime
+from pathlib import Path
 from unittest.mock import MagicMock, patch
 
 import pandas as pd
@@ -24,7 +26,7 @@ def test_decorator_without_filename_dataframe():
             result = test_func()
 
             # Проверяем, что файл создался
-            expected_filename = "report_20230101_120000.csv"
+            expected_filename = f'{Path(__file__).resolve().parent.parent / "reports"}/report_20230101_120000.csv'
             assert os.path.exists(expected_filename)
 
             # Проверяем содержимое файла
@@ -77,7 +79,7 @@ def test_decorator_without_filename_string():
             test_func()
 
             # Проверяем, что файл создался
-            expected_filename = "report_20230101_120000.csv"
+            expected_filename = f'{Path(__file__).resolve().parent.parent / "reports"}/report_20230101_120000.csv'
             assert os.path.exists(expected_filename)
 
             # Проверяем содержимое файла
@@ -141,9 +143,10 @@ def test_decorator_returns_correct_result():
     pd.testing.assert_frame_equal(result, expected_result)
 
     # Удаляем созданный файл
-    files = [f for f in os.listdir(".") if f.startswith("report_") and f.endswith(".csv")]
-    for file in files:
-        os.remove(file)
+    filename = Path(__file__).resolve().parent.parent / "reports"
+    date = datetime.now().strftime("%Y%m%d_%H%M%S")
+    filename = f"{filename}/report_{date}.csv"
+    os.remove(filename)
 
 
 def test_decorator_with_function_arguments():
@@ -220,9 +223,10 @@ def test_basic_functionality(reports_sample_operations):
     assert result["Сумма платежа"].iloc[0] == 4500  # 1000 + 2000 + 1500
 
     # Удаляем созданный файл
-    files = [f for f in os.listdir(".") if f.startswith("report_") and f.endswith(".csv")]
-    for file in files:
-        os.remove(file)
+    filename = Path(__file__).resolve().parent.parent / "reports"
+    date = datetime.now().strftime("%Y%m%d_%H%M%S")
+    filename = f"{filename}/report_{date}.csv"
+    os.remove(filename)
 
 
 def test_different_category(reports_sample_operations):
@@ -233,9 +237,10 @@ def test_different_category(reports_sample_operations):
     assert result["Сумма платежа"].iloc[0] == 500
 
     # Удаляем созданный файл
-    files = [f for f in os.listdir(".") if f.startswith("report_") and f.endswith(".csv")]
-    for file in files:
-        os.remove(file)
+    filename = Path(__file__).resolve().parent.parent / "reports"
+    date = datetime.now().strftime("%Y%m%d_%H%M%S")
+    filename = f"{filename}/report_{date}.csv"
+    os.remove(filename)
 
 
 def test_no_operations_in_period(reports_sample_operations):
@@ -246,9 +251,10 @@ def test_no_operations_in_period(reports_sample_operations):
     assert result["Сумма платежа"].iloc[0] == 0
 
     # Удаляем созданный файл
-    files = [f for f in os.listdir(".") if f.startswith("report_") and f.endswith(".csv")]
-    for file in files:
-        os.remove(file)
+    filename = Path(__file__).resolve().parent.parent / "reports"
+    date = datetime.now().strftime("%Y%m%d_%H%M%S")
+    filename = f"{filename}/report_{date}.csv"
+    os.remove(filename)
 
 
 def test_empty_dataframe():
@@ -260,9 +266,10 @@ def test_empty_dataframe():
     assert result["Сумма платежа"].iloc[0] == 0
 
     # Удаляем созданный файл
-    files = [f for f in os.listdir(".") if f.startswith("report_") and f.endswith(".csv")]
-    for file in files:
-        os.remove(file)
+    filename = Path(__file__).resolve().parent.parent / "reports"
+    date = datetime.now().strftime("%Y%m%d_%H%M%S")
+    filename = f"{filename}/report_{date}.csv"
+    os.remove(filename)
 
 
 def test_edge_case_exact_dates():
@@ -287,9 +294,10 @@ def test_edge_case_exact_dates():
     assert result["Сумма платежа"].iloc[0] == 300
 
     # Удаляем созданный файл
-    files = [f for f in os.listdir(".") if f.startswith("report_") and f.endswith(".csv")]
-    for file in files:
-        os.remove(file)
+    filename = Path(__file__).resolve().parent.parent / "reports"
+    date = datetime.now().strftime("%Y%m%d_%H%M%S")
+    filename = f"{filename}/report_{date}.csv"
+    os.remove(filename)
 
 
 def test_invalid_date_format(reports_sample_operations):

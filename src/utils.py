@@ -2,6 +2,7 @@ import json
 import logging
 import os
 from datetime import datetime, time
+from pathlib import Path
 from typing import Any
 
 import pandas as pd
@@ -11,7 +12,7 @@ from dotenv import load_dotenv
 
 logger = logging.getLogger("utils")
 logger.setLevel(logging.DEBUG)
-log_dir = os.path.abspath("../logs")
+log_dir = Path(__file__).resolve().parent.parent / "logs"
 os.makedirs(log_dir, exist_ok=True)
 file_handler = logging.FileHandler(filename=f"{log_dir}/utils.log", mode="w")
 file_formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s: %(message)s")

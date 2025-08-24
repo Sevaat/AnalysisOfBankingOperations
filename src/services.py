@@ -1,10 +1,11 @@
 import json
 import logging
 import os
+from pathlib import Path
 
 logger = logging.getLogger("services")
 logger.setLevel(logging.DEBUG)
-log_dir = os.path.abspath("../logs")
+log_dir = Path(__file__).resolve().parent.parent / "logs"
 os.makedirs(log_dir, exist_ok=True)
 file_handler = logging.FileHandler(filename=f"{log_dir}/services.log", mode="w")
 file_formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s: %(message)s")

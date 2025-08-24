@@ -3,18 +3,22 @@ import os
 import typing
 from datetime import datetime, timedelta
 from functools import wraps
+from pathlib import Path
 from typing import Optional
 
 import pandas as pd
 
 logger = logging.getLogger("reports")
 logger.setLevel(logging.DEBUG)
-log_dir = os.path.abspath("../logs")
+log_dir = Path(__file__).resolve().parent.parent / "logs"
 os.makedirs(log_dir, exist_ok=True)
 file_handler = logging.FileHandler(filename=f"{log_dir}/reports.log", mode="w")
 file_formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s: %(message)s")
 file_handler.setFormatter(file_formatter)
 logger.addHandler(file_handler)
+
+rep_dir = Path(__file__).resolve().parent.parent / "reports"
+os.makedirs(rep_dir, exist_ok=True)
 
 
 def report_saver(function: typing.Any = None, filename: Optional[str] = None) -> typing.Any:
@@ -35,7 +39,7 @@ def report_saver(function: typing.Any = None, filename: Optional[str] = None) ->
                 # Проверка имени файла
                 if filename is None:
                     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-                    filename_to_use = f"report_{timestamp}.csv"
+                    filename_to_use = f"{rep_dir}/report_{timestamp}.csv"
                     logger.info(f"Имя файла отчета не задано. Принимается имя: {filename_to_use}")
                 else:
                     filename_to_use = filename
